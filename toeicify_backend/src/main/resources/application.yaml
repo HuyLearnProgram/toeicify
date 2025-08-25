@@ -1,0 +1,106 @@
+spring:
+  cache:
+    type: redis
+  application:
+    name: toeic-api
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  devtools:
+    restart:
+      enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: ${GOOGLE_REDIRECT_URI}
+            scope:
+              - email
+              - profile
+              - openid
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+#        id:
+#          new_generator_mappings: true
+#        jdbc:
+#          batch_size: 60
+#          order_inserts: true
+#          order_updates: true
+#        format_sql: true
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+    redis:
+      host: ${REDIS_HOST}
+      username: ${REDIS_USERNAME}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      repositories:
+        enabled: false
+  mail:
+    username: ${MAIL_USERNAME}
+    port: ${MAIL_PORT}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            required: true
+            enable: true
+    host: ${MAIL_HOST}
+    password: ${MAIL_PASSWORD}
+    protocol: smtp
+  main:
+    banner-mode: off
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+server:
+  port: ${PORT:8888}
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+    url: /v3/api-docs
+
+app:
+  client: ${APP_CLIENT}
+  verification-link: ${VERIFICATION_LINK}
+
+cloud:
+  endpoint: ${S3_ENDPOINT}
+  accessKey: ${S3_ACCESS_KEY}
+  secretKey: ${S3_SECRET_KEY}
+  bucket: ${S3_BUCKET}
+  public-url: ${S3_PUBLIC_URL}
+  signing:
+    enabled: false
+
+gemini:
+  api:
+    key:  ${GEMINI_API_KEY}
+    model: ${GEMINI_API_MODEL}
+    base-url: ${GEMINI_API_BASE_URL}
+  system-prompt: ${GEMINI_SYSTEM_PROMPT}
